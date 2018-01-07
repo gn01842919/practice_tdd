@@ -3,3 +3,4 @@ __pycache__
 *.pyc
 geckodriver.log
 ghostdriver.log
+prev_fun_test.py
