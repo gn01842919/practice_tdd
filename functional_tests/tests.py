@@ -1,9 +1,10 @@
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-import unittest
 
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
+
     def setUp(self):
         # self.browser = webdriver.Firefox()
         self.browser = webdriver.PhantomJS(
@@ -21,7 +22,7 @@ class NewVisitorTest(unittest.TestCase):
     def test_can_start_a_list_and_retrieve_it_later(self):
 
         # Kyan goes to the homepage
-        self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
 
         # And the title and header shows 'To-do'
         self.assertIn('To-Do', self.browser.title)
@@ -57,7 +58,3 @@ class NewVisitorTest(unittest.TestCase):
 
         # ............
         self.fail("To be finished...")
-
-
-if __name__ == '__main__':
-    unittest.main()
