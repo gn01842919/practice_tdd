@@ -6,7 +6,8 @@ import unittest
 class NewVisitorTest(unittest.TestCase):
     def setUp(self):
         # self.browser = webdriver.Firefox()
-        self.browser = webdriver.PhantomJS(executable_path='C:\\Program Files\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe')
+        self.browser = webdriver.PhantomJS(
+            executable_path='C:\\Program Files\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe')
 
     def tearDown(self):
         self.browser.quit()
@@ -50,14 +51,13 @@ class NewVisitorTest(unittest.TestCase):
         self.check_for_row_in_list_table('1: Buy peacock feathers')
         self.check_for_row_in_list_table('2: may a fly')
 
-
-
         # He type "Make a fly"
 
         # Now the page shows two items
 
         # ............
         self.fail("To be finished...")
+
 
 if __name__ == '__main__':
     unittest.main()
