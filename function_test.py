@@ -24,7 +24,7 @@ class NewVisitorTest(unittest.TestCase):
         self.browser.get('http://localhost:8000')
 
         # And the title and header shows 'To-do'
-        assert 'To-Do' in self.browser.title
+        self.assertIn('To-Do', self.browser.title)
         header_text = self.browser.find_element_by_tag_name('h1').text
         self.assertIn('To-Do', header_text)
 
@@ -49,7 +49,7 @@ class NewVisitorTest(unittest.TestCase):
         inputbox.send_keys(Keys.ENTER)
 
         self.check_for_row_in_list_table('1: Buy peacock feathers')
-        self.check_for_row_in_list_table('2: may a fly')
+        self.check_for_row_in_list_table('2: make a fly')
 
         # He type "Make a fly"
 
