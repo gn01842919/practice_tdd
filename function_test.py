@@ -29,7 +29,7 @@ class NewVisitorTest(unittest.TestCase):
         # Now the page shows two items
 
         # ............
-
+        self.fail("To be finished...")
 
 if __name__ == '__main__':
     unittest.main()
