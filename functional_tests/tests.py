@@ -8,7 +8,8 @@ class NewVisitorTest(LiveServerTestCase):
     def setUp(self):
         # self.browser = webdriver.Firefox()
         self.browser = webdriver.PhantomJS(
-            executable_path='C:\\Program Files\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe')
+            executable_path='C:\\Program Files\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe'
+        )
 
     def tearDown(self):
         self.browser.quit()
@@ -39,12 +40,17 @@ class NewVisitorTest(LiveServerTestCase):
         # He inputs "buy peacock feathers"
         inputbox.send_keys('Buy peacock feathers')
 
-        # He type Enter, and the pages refreshes and show: "1. buy peacock feathers"
-        inputbox.send_keys(Keys.ENTER)
+        # He type Enter, and the page redirects to a new URL,
+        # and the new page shows the todo list item
 
+        inputbox.send_keys(Keys.ENTER)
+        kyan_list_url = self.browser.current_url
+        self.assertRegex(kyan_list_url, '/lists/.+')
         self.check_for_row_in_list_table('1: Buy peacock feathers')
 
-        # There is a input area
+        # There is still a input area
+        # He type "Make a fly"
+        # Now the page shows two items
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('make a fly')
         inputbox.send_keys(Keys.ENTER)
@@ -52,9 +58,43 @@ class NewVisitorTest(LiveServerTestCase):
         self.check_for_row_in_list_table('1: Buy peacock feathers')
         self.check_for_row_in_list_table('2: make a fly')
 
-        # He type "Make a fly"
+        # He leaves the website
+        self.browser.quit()
 
-        # Now the page shows two items
+        # Francis goes to the website
+        # He will not see Kyan's todo list
+        self.browser = webdriver.PhantomJS(
+            executable_path='C:\\Program Files\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe'
+        )
+        self.browser.get(self.live_server_url)
+        page_text = self.browser.find_element_by_tag_name('body').text
+
+        print(page_text)
+        self.assertNotIn('Buy peacock feathers', page_text)
+        self.assertNotIn('make a fly', page_text)
+
+        # He types some items
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        print(inputbox)
+        inputbox.send_keys('Buy milk')
+        inputbox.send_keys(Keys.ENTER)
+
+        # Francis gets a unique URL
+        francis_list_url = self.browser.current_url
+        self.asertRegex(francis_list_url, '/lists/.+')
+        self.assertNotEqual(francis_list_url, kyan_list_url)
+
+        page_text = self.browser.find_element_by_tag_name('body').text
+        self.assertNotIn('Buy peacock feathers', page_text)
+        self.assertNotIn('make a fly', page_text)
+        self.assertIn('Buy milk', page_text)
+
+
+
+
+
+
+
 
         # ............
         self.fail("To be finished...")
