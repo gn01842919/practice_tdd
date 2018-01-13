@@ -1,5 +1,6 @@
 from selenium.webdriver.common.keys import Keys
 from .base import FunctionalTest
+from lists.forms import EMPTY_ITEM_ERROR, DUPLICATE_ITEM_ERROR
 
 
 class ItemValidationTest(FunctionalTest):
@@ -7,14 +8,14 @@ class ItemValidationTest(FunctionalTest):
     def test_cannot_add_duplicate_items(self):
 
         self.browser.get(self.server_url)
-        self.get_item_input_box().send_keys('Buy wellies')
+        self.get_item_input_box().send_keys('Buy wellies\n')
         self.wait_for_row_in_list_table('1: Buy wellies')
 
-        self.get_item_input_box().send_keys('Buy wellies')
+        self.get_item_input_box().send_keys('Buy wellies\n')
         self.wait_for_row_in_list_table('1: Buy wellies')
 
         error = self.browser.find_element_by_css_selector('.has-error')
-        self.assertEqual(error.text, "You've......")
+        self.assertEqual(error.text, DUPLICATE_ITEM_ERROR)
 
     def test_cannot_add_empty_list_items(self):
         # Edith goes to the home page and accidentally tries to submit

@@ -7,7 +7,6 @@ import time
 MAX_WAIT = 10
 
 
-
 class FunctionalTest(StaticLiveServerTestCase):
 
     @classmethod
