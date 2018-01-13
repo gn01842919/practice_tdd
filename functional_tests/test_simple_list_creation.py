@@ -1,6 +1,6 @@
-from selenium.webdriver.common.keys import Keys
-from selenium import webdriver
 from .base import FunctionalTest
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 
 
 class NewVisitorTest(FunctionalTest):
@@ -44,6 +44,7 @@ class NewVisitorTest(FunctionalTest):
 
         # Satisfied, she goes back to sleep
 
+
     def test_multiple_users_can_start_lists_at_different_urls(self):
         # Edith start a new todo list
         self.browser.get(self.server_url)
@@ -58,8 +59,8 @@ class NewVisitorTest(FunctionalTest):
 
         # Now a new user, Francis, comes along to the site.
 
-        # # We use a new browser session to make sure that no information
-        # # of Edith's is coming through from cookies etc
+        ## We use a new browser session to make sure that no information
+        ## of Edith's is coming through from cookies etc
         self.browser.quit()
         self.browser = webdriver.Firefox()
 
@@ -88,3 +89,4 @@ class NewVisitorTest(FunctionalTest):
         self.assertIn('Buy milk', page_text)
 
         # Satisfied, they both go back to sleep
+
